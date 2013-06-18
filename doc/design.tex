@@ -1,0 +1,89 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\textheight=22cm
+\textwidth=14.945cm
+\topmargin=0.5cm
+\headheight=0cm
+\headsep=0cm
+\oddsidemargin=0.5cm
+\evensidemargin=0.5cm
+\columnsep=0.8cm
+\renewcommand{\baselinestretch}{1.3}
+
+\begin{document}
+
+\begin{titlepage}
+  \begin{center} \sloppy
+    \large \textsc{Huffman-coding - a data structures project}
+    \vfill
+
+    \huge \textbf{Design document} \vfill
+
+    \LARGE Jussi Mäki - joamaki@gmail.com
+    \vspace{3mm}
+
+    Data structures project\\
+
+    \vfill
+
+    Helsinki \today
+    % \number\day .\number\month .\number\year
+
+  \end{center}
+\end{titlepage}
+
+\section {Introduction}
+
+This document describes the design of data structures project
+involving the use of the Huffman-coding algorithm.
+
+The Huffman code algorithm is a greedy algorithm that takes a list of
+characters and corresponding frequencies in input data and outputs a
+tree which describes the optimal prefix code for each character. This
+resulting prefix code tree can be then used to compress the input data
+and to decompress it.
+
+The program implemented in this project shall provide
+compression and decompression of arbitary data using
+the Huffman code algorithm.
+
+\section {Data structures}
+
+The huffman code algorithm as described in \cite{CLRS} requires the
+use of an auxilliary data structure to extract the lowest frequency
+object, ie. a form priority queue. A binary heap data structure is
+well suited for this task and so shall be used as the auxilliary data
+structure for the algorithm.
+
+To build the set of character frequencies in the input data a table of
+integers the size of possible character values is used.  This table is
+then rebuilt as a heap (using frequency as the key) before passing it
+to the huffman code algorithm.
+
+\section {Program usage}
+
+The program is controlled by the use of command-line arguments. It
+has two modes of operation: compression and decompression.
+
+If no command-line arguments are given it'll default to compressing
+the standard input to the standard output. If one filename is given it
+will compress and save the output to filename.hc.  Decompression mode
+is enabled with the option '-d'. If a filename is given when
+decompression mode is enabled and it has the suffix .hc the result is
+output to a file with the suffix removed.
+
+Example of compression and decompression:
+
+\begin{verbatim}
+$ hc thesis.txt
+Compressing thesis.txt to thesis.txt.hc...
+$ hc -d thesis.txt.hc
+Decompressing thesis.txt.hc to thesis.txt...
+\end{verbatim}
+
+\bibliographystyle{plain}
+\bibliography{ref}
+
+\end{document}
